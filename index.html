@@ -1014,6 +1014,15 @@
       }
     ];
 
+	const mapRotations = {
+		'Abyss': 90,
+		'Ascent': 90,
+		'Corrode': 90,
+		'Haven': 90,
+		'Icebox': -90,
+		'Split': 90,
+	};
+
     // Lokale Bilder Speichern
     const loadedImages = {};
 
@@ -1090,12 +1099,14 @@
       const minimapImg = document.getElementById('minimapImg');
       minimapImg.src = mapMinimaps[currentFilters.map] || 'https://placehold.co/300x300/0d2137/38bdf8?text=' + currentFilters.map;
 
-      if (!isAllMaps && currentFilters.side === 'Defender') {
-        minimapImg.classList.add('rotated');
-      } else {
-        minimapImg.classList.remove('rotated');
-      }
+	  let degrees = mapRotations[currentFilters.map] || 0; 
 
+      if (!isAllMaps && currentFilters.side === 'Defender') {
+        degrees += 180;
+      }
+	   
+	  minimapImg.style.transform = 'rotate(${degrees}deg)';
+	   
       const filtered = lineups.filter(l => {
         if (l.agent !== currentFilters.agent) return false;
         if (isAllMaps) return true; // Bei ALL MAPS alle Lineups des Agents zeigen
