@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAKTIK-BOARD · VALORANT LINEUP-REGISTER</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+    :root {
+      --bp-bg: #0d2137;
+      --bp-grid: rgba(56, 189, 248, 0.15);
+      --bp-grid-sub: rgba(56, 189, 248, 0.05);
+      --bp-panel: #112a46;
+      --bp-panel-hover: #163456;
+      --bp-border: #38bdf8;
+      --bp-border-dim: #1e4976;
+      --bp-text: #e0f2fe;
+      --bp-text-dim: #7dd3fc;
+      --bp-yellow: #facc15;
+      --bp-yellow-dim: rgba(250, 204, 21, 0.12);
+      --bp-font-mono: 'Share Tech Mono', monospace;
+      --bp-font-main: 'Chakra Petch', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bp-bg);
+      background-image: 
+        linear-gradient(var(--bp-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--bp-grid) 1px, transparent 1px),
+        linear-gradient(var(--bp-grid-sub) 1px, transparent 1px),
+        linear-gradient(90deg, var(--bp-grid-sub) 1px, transparent 1px);
+      background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+      color: var(--bp-text);
+      font-family: var(--bp-font-main);
+      min-height: 100vh;
+      padding: 0.75rem;
+    }
+
+    /* Outer Wrapper Blueprint Frame */
+    .blueprint-wrapper {
+      border: 1px solid var(--bp-border);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+      background: rgba(13, 33, 55, 0.92);
+      padding: 0.75rem;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* Title Block Header */
+    .title-header {
+      border: 1px solid var(--bp-border-dim);
+      background: var(--bp-panel);
+      padding: 0.6rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .title-header .sub {
+      font-family: var(--bp-font-mono);
+      font-size: 0.7rem;
+      color: var(--bp-text-dim);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .title-header h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .title-header h1 span {
+      color: var(--bp-yellow);
+      background: var(--bp-yellow-dim);
+      padding: 0 4px;
+    }
+
+    .btn-blue-subtle {
+      background: rgba(30, 73, 118, 0.6);
+      color: var(--bp-text-dim);
+      font-family: var(--bp-font-mono);
+      font-weight: 600;
+      font-size: 0.85rem;
+      border: 1px solid var(--bp-border-dim);
+      padding: 0.5rem 1.1rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-blue-subtle:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--bp-border);
+      color: #fff;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
+    }
+
+    /* Control Matrix (Top Controls) */
+    .control-panel {
+      border: 1px solid var(--bp-border-dim);
+      background: var(--bp-panel);
+      display: grid;
+      grid-template-columns: 1.1fr 2.2fr 1.1fr 1fr 2fr;
+      gap: 0;
+      margin-bottom: 0.75rem;
+    }
+
+    .matrix-box {
+      border-right: 1px solid var(--bp-border-dim);
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .matrix-box:last-child {
+      border-right: none;
+    }
+
+    .matrix-title {
+      font-family: var(--bp-font-mono);
+      font-size: 0.75rem;
+      color: var(--bp-border);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .matrix-title span {
+      border: 1px solid var(--bp-yellow);
+      color: var(--bp-yellow);
+      font-size: 0.65rem;
+      padding: 0 4px;
+    }
+
+    .btn-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    /* Vertikaler Stapel für Agent, Seite, Spot */
+    .btn-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      width: 100%;
+    }
+
+    /* Größere, griffigere Buttons */
+    .bp-btn {
+      background: transparent;
+      border: 1px solid var(--bp-border-dim);
+      color: var(--bp-text-dim);
+      font-family: var(--bp-font-mono);
+      font-size: 0.9rem;
+      padding: 0.55rem 0.8rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+      width: 100%;
+    }
+
+    /* Für Map-Grid (wo Buttons nebeneinander liegen) */
+    .btn-grid .bp-btn {
+      width: auto;
+      flex: 1 1 calc(33.33% - 0.4rem);
+      min-width: 85px;
+    }
+
+    .bp-btn:hover {
+      border-color: var(--bp-border);
+      color: #fff;
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .bp-btn.active {
+      border-color: var(--bp-yellow);
+      color: var(--bp-yellow);
+      background: var(--bp-yellow-dim);
+      font-weight: bold;
+    }
+
+    /* Minimap View Box - Groß & Prominent */
+    .map-preview-box {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem;
+      background: rgba(0, 0, 0, 0.35);
+      min-height: 250px;
+    }
+
+    .map-tag {
+      position: absolute;
+      font-family: var(--bp-font-mono);
+      font-size: 0.75rem;
+      color: var(--bp-yellow);
+      background: rgba(13, 33, 55, 0.95);
+      padding: 2px 8px;
+      border: 1px solid var(--bp-yellow);
+      z-index: 2;
+    }
+
+    .map-tag.top-right { top: 8px; right: 8px; }
+    .map-tag.bottom-right { bottom: 8px; right: 8px; }
+
+    .minimap-img {
+      max-height: 230px;
+      width: auto;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .minimap-img.rotated {
+      transform: rotate(180deg);
+    }
+
+    /* Breadcrumb & Match Bar */
+    .status-bar {
+      border: 1px solid var(--bp-border-dim);
+      background: var(--bp-panel);
+      padding: 0.45rem 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--bp-font-mono);
+      font-size: 0.8rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .status-path {
+      color: var(--bp-text-dim);
+    }
+
+    .status-count {
+      color: var(--bp-yellow);
+      font-weight: bold;
+    }
+
+    /* Lineup Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 0.75rem;
+    }
+
+    /* Lineup Card Blueprint */
+    .lu-card {
+      border: 1px solid var(--bp-border-dim);
+      background: var(--bp-panel);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: border-color 0.2s ease;
+    }
+
+    .lu-card:hover {
+      border-color: var(--bp-border);
+    }
+
+    .lu-card-header {
+      background: rgba(56, 189, 248, 0.08);
+      border-bottom: 1px solid var(--bp-border-dim);
+      padding: 0.35rem 0.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--bp-font-mono);
+      font-size: 0.65rem;
+      color: var(--bp-text-dim);
+    }
+
+    .lu-card-title {
+      font-family: var(--bp-font-main);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      padding: 0.35rem 0.6rem 0.05rem 0.6rem;
+    }
+
+    .lu-card-sub {
+      font-family: var(--bp-font-mono);
+      font-size: 0.7rem;
+      color: var(--bp-yellow);
+      padding: 0 0.6rem 0.4rem 0.6rem;
+    }
+
+    .lu-card-body {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--bp-border-dim);
+    }
+
+    .lu-content {
+      flex: 1;
+      padding: 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .lu-img-box {
+      border: 1px solid var(--bp-border-dim);
+      background: #061322;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lu-img-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .lu-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .lu-box {
+      border: 1px solid var(--bp-border-dim);
+      background: rgba(13, 33, 55, 0.5);
+      padding: 0.3rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.05rem;
+    }
+
+    .lu-box-num {
+      font-family: var(--bp-font-mono);
+      font-size: 0.6rem;
+      color: var(--bp-yellow);
+      border: 1px solid var(--bp-yellow);
+      display: inline-block;
+      padding: 0 3px;
+      width: fit-content;
+      line-height: 1;
+    }
+
+    .lu-box-label {
+      font-family: var(--bp-font-mono);
+      font-size: 0.62rem;
+      color: var(--bp-text-dim);
+      text-transform: uppercase;
+    }
+
+    .lu-box-val {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Lightbox Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(13, 33, 55, 0.95);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-img {
+      max-width: 92vw;
+      max-height: 92vh;
+      border: 1px solid var(--bp-yellow);
+      box-shadow: 0 0 25px rgba(250, 204, 21, 0.25);
+    }
+
+    @media (max-width: 1200px) {
+      .control-panel {
+        grid-template-columns: 1fr 2fr 1fr;
+      }
+      .map-preview-box {
+        grid-column: span 3;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .control-panel {
+        grid-template-columns: 1fr;
+      }
+      .map-preview-box {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="blueprint-wrapper">
+    <!-- Header -->
+    <header class="title-header">
+      <div>
+        <div class="sub">TAKTIK-BOARD · VALORANT LINEUP-REGISTER</div>
+        <h1>Warum hast du für das <span>schon wieder</span> ein Lineup</h1>
+      </div>
+      <button class="btn-blue-subtle" onclick="document.getElementById('fileInput').click()">
+        📁 Wo Infos
+      </button>
+      <input type="file" id="fileInput" multiple accept="image/*" style="display:none">
+    </header>
+
+    <!-- Matrix Filter Bar -->
+    <section class="control-panel">
+      <!-- 01 Agent -->
+      <div class="matrix-box">
+        <div class="matrix-title"><span>01</span> AGENT</div>
+        <div class="btn-stack" id="agentFilter">
+          <button class="bp-btn active" onclick="setFilter('agent', 'Brimstone')">Brimstone</button>
+          <button class="bp-btn" onclick="setFilter('agent', 'KAY/O')">KAY/O</button>
+          <button class="bp-btn" onclick="setFilter('agent', 'Sova')">Sova</button>
+        </div>
+      </div>
+
+      <!-- 02 Map -->
+      <div class="matrix-box">
+        <div class="matrix-title"><span>02</span> MAP</div>
+        <div class="btn-grid" id="mapFilter">
+          <button class="bp-btn" onclick="setFilter('map', 'Abyss')">Abyss</button>
+          <button class="bp-btn active" onclick="setFilter('map', 'Ascent')">Ascent</button>
+          <button class="bp-btn" onclick="setFilter('map', 'Bind')">Bind</button>
+          <button class="bp-btn" onclick="setFilter('map', 'Breeze')">Breeze</button>
+          <button class="bp-btn" onclick="setFilter('map', 'Corrode')">Corrode</button>
+          <button class="bp-btn" onclick="setFilter('map', 'Fracture')">Fracture</button>
+          <button class="bp-btn" onclick="setFilter('map', 'Haven')">Haven</button>
+          <button class="bp-btn" onclick="setFilter('map', 'Icebox')">Icebox</button>
+          <button class="bp-btn" onclick="setFilter('map', 'Lotus')">Lotus</button>
+          <button class="bp-btn" onclick="setFilter('map', 'Pearl')">Pearl</button>
+          <button class="bp-btn" onclick="setFilter('map', 'Split')">Split</button>
+          <button class="bp-btn" onclick="setFilter('map', 'Sunset')">Sunset</button>
+          <button class="bp-btn" onclick="setFilter('map', 'ALL MAPS')">ALL MAPS</button>
+        </div>
+      </div>
+
+      <!-- 03 Seite -->
+      <div class="matrix-box">
+        <div class="matrix-title"><span>03</span> SEITE</div>
+        <div class="btn-stack" id="sideFilter">
+          <button class="bp-btn active" onclick="setFilter('side', 'Attacker')">Attacker</button>
+          <button class="bp-btn" onclick="setFilter('side', 'Defender')">Defender</button>
+        </div>
+      </div>
+
+      <!-- 04 Spot -->
+      <div class="matrix-box">
+        <div class="matrix-title"><span>04</span> SPOT</div>
+        <div class="btn-stack" id="spotFilter">
+          <!-- Wird dynamisch per JavaScript befüllt (A/B oder A/B/C) -->
+        </div>
+      </div>
+
+      <!-- Minimap Preview -->
+      <div class="map-preview-box">
+        <div class="matrix-title" style="position: absolute; top: 8px; left: 8px;">GRUNDRISS</div>
+        <div class="map-tag top-right" id="sideBadge">ATK</div>
+        <img id="minimapImg" class="minimap-img" src="https://placehold.co/300x300/0d2137/38bdf8?text=MINIMAP" alt="Minimap">
+        <div class="map-tag bottom-right" id="mapNameBadge">ABYSS</div>
+      </div>
+    </section>
+
+    <!-- Status / Count Bar -->
+    <div class="status-bar">
+      <div class="status-path" id="statusBreadcrumb">Brimstone / Abyss / Attacker / Spot A</div>
+      <div class="status-count" id="statusCount">0 Treffer</div>
+    </div>
+
+    <!-- Lineup Cards Grid -->
+    <main class="cards-grid" id="lineupGrid">
+      <!-- Dynamisch -->
+    </main>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="modal" id="imageModal" onclick="closeModal()">
+    <img id="modalImg" class="modal-img" src="" alt="Großansicht">
+  </div>
+
+  <script>
+    // Aktiver Filter-Zustand
+    const currentFilters = {
+      agent: 'Brimstone',
+      map: 'Ascent',
+      side: 'Attacker',
+      spot: 'A'
+    };
+
+    // Minimap Bildpfade
+    const mapMinimaps = {
+      'ALL MAPS': 'https://placehold.co/300x300/112a46/facc15?text=ALL+MAPS',
+      "Abyss":"https://media.valorant-api.com/maps/224b0a95-48b9-f703-1bd8-67aca101a61f/displayicon.png",
+      "Ascent":"https://media.valorant-api.com/maps/7eaecc1b-4337-bbf6-6ab9-04b8f06b3319/displayicon.png",
+      "Bind":"https://media.valorant-api.com/maps/2c9d57ec-4431-9c5e-2939-8f9ef6dd5cba/displayicon.png",
+      "Breeze":"https://media.valorant-api.com/maps/2fb9a4fd-47b8-4e7d-a969-74b4046ebd53/displayicon.png",
+      "Corrode":"https://media.valorant-api.com/maps/1c18ab1f-420d-0d8b-71d0-77ad3c439115/displayicon.png",
+      "Fracture":"https://media.valorant-api.com/maps/b529448b-4d60-346e-e89e-00a4c527a405/displayicon.png",
+      "Haven":"https://media.valorant-api.com/maps/2bee0dc9-4ffe-519b-1cbd-7fbe763a6047/displayicon.png",
+      "Icebox":"https://media.valorant-api.com/maps/e2ad5c54-4114-a870-9641-8ea21279579a/displayicon.png",
+      "Lotus":"https://media.valorant-api.com/maps/2fe4ed3a-450a-948b-6d6b-e89a78e680a9/displayicon.png",
+      "Pearl":"https://media.valorant-api.com/maps/fd267378-4d1d-484f-ff52-77821ed10dc2/displayicon.png",
+      "Split":"https://media.valorant-api.com/maps/d960549e-485c-e861-8d71-aa9d1aed12a2/displayicon.png",
+      "Sunset":"https://media.valorant-api.com/maps/92584fbe-486a-b1b2-9faa-39b0f486b498/displayicon.png"
+    };
+
+    // Gesamte Datenbank (Abyss, Ascent, Bind, Breeze, Corrode)
+    const lineups = [
+      // --- ABYSS (11 Lineups) ---
+      {
+        filename: 'Brimstone_Defender_Abyss_A-Bridge_A-Spawn.png',
+        agent: 'Brimstone', map: 'Abyss', side: 'Defender', spot: 'A',
+        title: 'Molly auf A-Bridge', von: 'Defender Side Spawn',
+        aim: 'Unterer HUD-Punkt unter Stim Beacon an Wandkante', hit: 'A-Bridge'
+      },
+      {
+        filename: 'Brimstone_Attacker_Abyss_A-Bridge_A-Lobby.png',
+        agent: 'Brimstone', map: 'Abyss', side: 'Attacker', spot: 'A',
+        title: 'Molly auf A-Bridge', von: 'A-Lobby',
+        aim: 'HUD-Pfeil über Molly-Icon auf Felsspitze', hit: 'A-Bridge'
+      },
+      {
+        filename: 'Brimstone_Defender_Abyss_A-Default_A-Spawn.png',
+        agent: 'Brimstone', map: 'Abyss', side: 'Defender', spot: 'A',
+        title: 'Retake Molly A-Default', von: 'Defender Side Spawn',
+        aim: 'Feuer-Icon des HUDs an Balkenkante', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Abyss_A-Default_A-Vent.png',
+        agent: 'Brimstone', map: 'Abyss', side: 'Defender', spot: 'A',
+        title: 'Retake Molly A-Default', von: 'A-Tower / Vent',
+        aim: 'Crosshair direkt an Wand/Türöffnung', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Abyss_A-Default_A-Lobby.png',
+        agent: 'Brimstone', map: 'Abyss', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant Molly A-Default', von: 'A-Lobby',
+        aim: 'Linke Schild-Anzeige (HUD) auf Felskante', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Abyss_A-Default_A-Main.png',
+        agent: 'Brimstone', map: 'Abyss', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant Molly A-Default', von: 'A-Main',
+        aim: 'Crosshair an obere Träger/Dachkante', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Abyss_B-Safe_B-Spawn.png',
+        agent: 'Brimstone', map: 'Abyss', side: 'Defender', spot: 'B',
+        title: 'Retake Molly B-Safe', von: 'Defender Side Spawn',
+        aim: 'HUD-Schild-Symbol an Geländerkante', hit: 'B-Safe Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Abyss_B-Safe_B-Link.png',
+        agent: 'Brimstone', map: 'Abyss', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant Molly B-Safe', von: 'B-Link',
+        aim: 'Crosshair auf blauen Kristallspitz am Dach', hit: 'B-Safe Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Abyss_B-Safe_B-MainBox.png',
+        agent: 'Brimstone', map: 'Abyss', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant Molly B-Safe', von: 'B-Lobby',
+        aim: 'Unten-links Schild-Icon an Kantenstruktur', hit: 'B-Safe Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Abyss_B-Under_B-Main.png',
+        agent: 'Brimstone', map: 'Abyss', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant Molly B-Under', von: 'B-Main',
+        aim: 'HUD-Molly-Symbol mittig unter dem Felsen', hit: 'B-Under Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Abyss_B-Open_B-Main.png',
+        agent: 'Brimstone', map: 'Abyss', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant Molly B-Open', von: 'B-Main',
+        aim: 'Fadenkreuz mittig in Felsvertiefung ausrichten', hit: 'B-Open Plant'
+      },
+
+      // --- ASCENT (22 Lineups) ---
+      {
+        filename: 'Brimstone_Attacker_Ascent_B-Default_B-Main.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Default', von: 'B-Main',
+        aim: 'Fadenkreuz mittig in Bogenfenster-Baum', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Ascent_B-Main_A-Garden.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Defender', spot: 'B',
+        title: 'Retake/Delay B-Main', von: 'A-Garden',
+        aim: 'Molly-Pfeil-Icon an Efeukante Dach', hit: 'B-Main Entrance'
+      },
+      {
+        filename: 'Brimstone_Defender_Ascent_A-Main_B-Market.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Defender', spot: 'A',
+        title: 'Delay A-Main Rush', von: 'B-Market',
+        aim: 'HUD-Trennlinie auf rote Stoffkante', hit: 'A-Main Entrance'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_B-Open_B-Main.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Open', von: 'B-Main',
+        aim: 'Fadenkreuz auf Fensterecke links oben', hit: 'B-Open Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_B-Corner_Mid-Bottom.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Corner', von: 'Mid-Bottom',
+        aim: 'Rechter HUD-Linien-Anschlag auf Ziegeldach', hit: 'B-Corner Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_B-Corner_B-Lobby.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Corner', von: 'B-Lobby',
+        aim: 'Molly-HUD-Linie auf Hauskante ausrichten', hit: 'B-Corner Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Ascent_B-Default_CT-Spawn_JUMP .png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Defender', spot: 'B',
+        title: 'Retake B-Default (JUMP)', von: 'Defender Side Spawn',
+        aim: 'HUD-Molly-Pfeil an Kante + Jump-Throw', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_B-Default_Mid-Pizza.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Default', von: 'Mid-Pizza',
+        aim: 'Rechter HUD-Kreis-Rand an Turmkante', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Ascent_B-Default_Mid-Pizza.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Defender', spot: 'B',
+        title: 'Retake B-Default', von: 'Mid-Pizza',
+        aim: 'Rechter HUD-Kreis-Rand an Turmkante', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_B-Default_B-Lobby.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Default', von: 'B-Lobby',
+        aim: 'Fadenkreuz mittig auf Fensterladen', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_A-Boxes_Mid-Cubby.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'A',
+        title: 'Molly auf A-Boxes', von: 'Catwalk / Mid Cubby',
+        aim: 'HUD-Symbol (Molly-Icon) an Dachkante anlegen', hit: 'A-Boxes / Generator'
+      },
+      {
+        filename: 'Brimstone_Defender_Ascent_A-Open_CT-Spawn.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Defender', spot: 'A',
+        title: 'Retake A-Open', von: 'Defender Side Spawn',
+        aim: 'HUD-Molly-Icon unter Balkonkante', hit: 'A-Open Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_A-Open_Mid-Cubby.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Open', von: 'Mid-Cubby',
+        aim: 'Linker HUD-Schild auf Ziegelkante', hit: 'A-Open Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_A-Open_A-Main.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Open', von: 'A-Lobby / Main',
+        aim: 'Linker HUD-Ecken-Anschlag an Metallträger', hit: 'A-Open Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Ascent_A-Boxes_CT-Spawn.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Defender', spot: 'A',
+        title: 'Retake A-Boxes', von: 'Defender Side Spawn',
+        aim: 'Linker HUD-Schild auf Vorsprung ausrichten', hit: 'A-Boxes Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Ascent_A-Default_CT-Spawn.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Defender', spot: 'A',
+        title: 'Retake A-Default', von: 'Defender Side Spawn',
+        aim: 'Linkes HUD-Schild auf Wandverkleidung', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Ascent_A-Default_A-Garden-Top.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Defender', spot: 'A',
+        title: 'Retake A-Default', von: 'A-Garden Top',
+        aim: 'HUD-Molly-Icon auf Holzkiste', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_A-Default_Mid-Cubby.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant Molly A-Default', von: 'Catwalk / Mid Cubby (Nische)',
+        aim: 'Rechter HUD-Strich des Molly-Icons auf Ecke', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_A-Default_Mid-Top.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Default', von: 'Mid-Top',
+        aim: 'HUD-Lebensanzeige (100) auf Kantenstreifen', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_A-Default_A-Wine.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Default', von: 'A-Wine',
+        aim: 'HUD-Molly-Symbol auf Bergspitze', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_A-Default_A-Main.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant Molly A-Default', von: 'A-Main (an Holzwand gepresst)',
+        aim: 'Rechter HUD-Strich des Molly-Icons auf Ecke', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Ascent_A-Boxes_A-Main.png',
+        agent: 'Brimstone', map: 'Ascent', side: 'Attacker', spot: 'A',
+        title: 'Molly auf A-Boxes', von: 'A-Main (Ecke vor der Barriere)',
+        aim: 'Roter Kreis an der oberen Dachkante', hit: 'A-Boxes / Generator'
+      },
+
+      // --- BIND (14 Lineups) ---
+      {
+        filename: 'Brimstone_Defender_Bind_B-Default-Links-Toaster-FAST_B-Elbow.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Defender', spot: 'B',
+        title: 'Retake Molly B-Default (FAST)', von: 'B-Elbow',
+        aim: 'Kreuz an der Kantenstruktur ausrichten', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Bind_B-Default_A-OnSpot.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Defender', spot: 'B',
+        title: 'Retake B-Default', von: 'A Site (On Spot)',
+        aim: 'HUD-Element an oberer Dachkante anlegen', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Bind_B-Open_A-OnSpot.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Defender', spot: 'B',
+        title: 'Retake B-Open', von: 'A Site (On Spot)',
+        aim: 'HUD-Molly-Pfeil an Dachkante ausrichten', hit: 'B-Open Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Bind_A-Main_B-OnSpot.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Defender', spot: 'A',
+        title: 'Delay A-Main Rush', von: 'B Site (On Spot)',
+        aim: 'Mitte der grünen Glaswand im Visier behalten', hit: 'A-Main Entrance'
+      },
+      {
+        filename: 'Brimstone_Attacker_Bind_A-Boxes_A-Short.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant Molly A-Boxes', von: 'A-Short',
+        aim: 'HUD-Symbol an Fensterrahmen anlegen', hit: 'A-Boxes / Generator'
+      },
+      {
+        filename: 'Brimstone_Attacker_Bind_A-Boxes_A-Bath.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant Molly A-Boxes', von: 'A-Bath (Showers)',
+        aim: 'Fadenkreuz auf Dachvorsprung im Loch ausrichten', hit: 'A-Boxes / Generator'
+      },
+      {
+        filename: 'Brimstone_Attacker_Bind_A-Default_A-Link.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant Molly A-Default', von: 'A-Link',
+        aim: 'HUD-Pfeil an Dachkante der Gebäude ausrichten', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Bind_A-Default_A-Short.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant Molly A-Default', von: 'A-Short',
+        aim: 'HUD-Molly-Symbol an Wandstruktur anlegen', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Bind_B-Default-Links-Toaster_CT-Spawn.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Defender', spot: 'B',
+        title: 'Retake B-Default (Toaster)', von: 'Defender Side Spawn',
+        aim: 'Zielpunkt auf Antenne/Toaster auf dem Dach', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Bind_A-Box_spawn.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant Molly A-Boxes', von: 'A-Lobby / Spawn',
+        aim: 'HUD-Symbol an Wandstruktur ausrichten', hit: 'A-Boxes / Generator'
+      },
+      {
+        filename: 'Brimstone_Attacker_Bind_B-Default-Links-Toaster-FAST_B-Long.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Default (FAST)', von: 'B-Long',
+        aim: 'Fadenkreuz auf Steinbogen-Kante anlegen', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Bind_A-Default_B-OnSpot.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Defender', spot: 'A',
+        title: 'Retake A-Default', von: 'B Site (On Spot)',
+        aim: 'HUD-Molly-Pfeil an Gebäudeecke ausrichten', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Bind_B-Default-Links-Toaster_B-Long.png',
+        agent: 'Brimstone', map: 'Bind', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Default (Toaster)', von: 'B-Long',
+        aim: 'HUD-Anzeige an linker Ecke einpassen', hit: 'B-Default Plant'
+      },
+
+      // --- BREEZE (13 Lineups) ---
+      {
+        filename: 'Brimstone_Defender_Breeze_A-Default_CT-Spawn.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Defender', spot: 'A',
+        title: 'Retake A-Default', von: 'Defender Side Spawn',
+        aim: 'HUD-Element an Metallkante anlegen', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Breeze_B-Default_CT-Spawn.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Defender', spot: 'B',
+        title: 'Retake B-Default', von: 'Defender Side Spawn',
+        aim: 'HUD-Pfeil an Efeublättern der Wand ausrichten', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Breeze_B-Default_Mid-Top.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Default', von: 'Mid-Top',
+        aim: 'HUD-Anzeige an Kantenstruktur ausrichten', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Breeze_B-Default_Mid-Top.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Defender', spot: 'B',
+        title: 'Retake B-Default', von: 'Mid-Top',
+        aim: 'HUD-Anzeige an Kantenstruktur ausrichten', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Breeze_B-Default_Mid-Pillar.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Default', von: 'Mid-Pillar',
+        aim: 'HUD-Molly-Symbol an Steinwand anlegen', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Breeze_B-Default_B-Window.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Default', von: 'B-Window',
+        aim: 'HUD-Symbol an Steinbrüstung ausrichten', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Breeze_B-Default_B-Main.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Default', von: 'B-Main',
+        aim: 'HUD-Leiste an Wandkante einpassen', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Breeze_A-Center_CT-Spawn.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Defender', spot: 'A',
+        title: 'Retake A-Center', von: 'Defender Side Spawn',
+        aim: 'HUD-Lebensanzeige an Wandstruktur anlegen', hit: 'A-Center'
+      },
+      {
+        filename: 'Brimstone_Attacker_Breeze_A-Center_Mid-Pillar.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Center', von: 'Mid-Pillar',
+        aim: 'HUD-Molly-Symbol mittig über Lüftungsschlitz', hit: 'A-Center'
+      },
+      {
+        filename: 'Brimstone_Attacker_Breeze_A-Center_A-Lobby.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Center', von: 'A-Lobby',
+        aim: 'Fadenkreuz auf Büsche/Blätterspitze ausrichten', hit: 'A-Center'
+      },
+      {
+        filename: 'Brimstone_Attacker_Breeze_A-Default_A-Lobby.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Default', von: 'A-Lobby',
+        aim: 'Fadenkreuz auf obere Buschspitze ausrichten', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Breeze_A-Default_Mid-Pillar.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Default', von: 'Mid-Pillar',
+        aim: 'HUD-Trennlinie an Kantenstruktur anlegen', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Breeze_A-Default_Mid-Bottom.png',
+        agent: 'Brimstone', map: 'Breeze', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Default', von: 'Mid-Bottom / Spawn',
+        aim: 'Fadenkreuz an der Kante des Bananenblatts ausrichten', hit: 'A-Default Plant'
+      },
+
+      // --- CORRODE (20 Lineups) ---
+      {
+        filename: 'Brimstone_Defender_Corrode_B-Default_Mid-Window.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Defender', spot: 'B',
+        title: 'Retake B-Default', von: 'Mid-Window',
+        aim: 'HUD-Leiste an Holzbalken ausrichten', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Corrode_B-Main_Mid-Window.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Defender', spot: 'B',
+        title: 'Delay B-Main', von: 'Mid-Window',
+        aim: 'HUD-Symbol an Stützbalken anlegen', hit: 'B-Main Entrance'
+      },
+      {
+        filename: 'Brimstone_Defender_Corrode_A-Main_Mid-Window.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Defender', spot: 'A',
+        title: 'Delay A-Main', von: 'Mid-Window',
+        aim: 'Fadenkreuz auf Dachkante ausrichten', hit: 'A-Main Entrance'
+      },
+      {
+        filename: 'Brimstone_Defender_Corrode_B-Main_A-OnSpot.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Defender', spot: 'B',
+        title: 'Retake B-Main (Jumpshot)', von: 'A Site (On Spot)',
+        aim: 'Fadenkreuz an Dachkante + Jump-Throw', hit: 'B-Main Entrance'
+      },
+      {
+        filename: 'Brimstone_Defender_Corrode_B-Hut_CT-Spawn.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Defender', spot: 'B',
+        title: 'Retake B-Hut', von: 'Defender Side Spawn',
+        aim: 'HUD-Pfeil an Kristallspitze anlegen', hit: 'B-Hut'
+      },
+      {
+        filename: 'Brimstone_Attacker_Corrode_B-Hut_Mid-Window.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Hut', von: 'Mid-Window',
+        aim: 'Fadenkreuz an Stoffkante ausrichten', hit: 'B-Hut'
+      },
+      {
+        filename: 'Brimstone_Defender_Corrode_B-Hut_Mid-Window.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Defender', spot: 'B',
+        title: 'Retake B-Hut', von: 'Mid-Window',
+        aim: 'Fadenkreuz an Stoffkante ausrichten', hit: 'B-Hut'
+      },
+      {
+        filename: 'Brimstone_Attacker_Corrode_B-Hut_B-Lobby.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Hut', von: 'B-Lobby',
+        aim: 'Fadenkreuz an herbstlicher Baumblattspitze anlegen', hit: 'B-Hut'
+      },
+      {
+        filename: 'Brimstone_Defender_Corrode_B-Default_CT-Spawn.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Defender', spot: 'B',
+        title: 'Retake B-Default', von: 'Defender Side Spawn',
+        aim: 'HUD-Pfeil auf Turmdachkante ausrichten', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Corrode_B-Default_Mid-Window.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Default', von: 'Mid-Window',
+        aim: 'HUD-Leiste an Holzbalken ausrichten', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Corrode_A-Default_A-Main.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Default', von: 'A-Main',
+        aim: 'HUD-Feuer-Icon an Dach- bzw. Turmspitze ausrichten', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Corrode_B-Default_B-Lobby.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Default', von: 'B-Lobby',
+        aim: 'Fadenkreuz auf Dachrinne anlegen', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Corrode_B-Default_B-Main.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Attacker', spot: 'B',
+        title: 'Post-Plant B-Default', von: 'B-Main',
+        aim: 'Fadenkreuz an oberer Struktur des gelben Krans/Dachs ausrichten', hit: 'B-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Corrode_A-Open_A-Link.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Open', von: 'A-Link',
+        aim: 'HUD-Molly-Pfeil an Mauerstruktur anlegen', hit: 'A-Open Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Corrode_A-Open_A-Lobby.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Open', von: 'A-Lobby',
+        aim: 'HUD-Linie an architektonischem Bauelement ausrichten', hit: 'A-Open Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Corrode_A-Default_CT-Spawn.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Default', von: 'A-Crane',
+        aim: 'HUD-Leiste an Kantenstruktur anlegen', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Corrode_A-Default_Mid-Top.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Default', von: 'Mid-Top',
+        aim: 'Fadenkreuz mittig in Fenster-/Holzöffnung platzieren', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Defender_Corrode_A-Default_Mid-Top.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Defender', spot: 'A',
+        title: 'Retake A-Default', von: 'Mid-Top',
+        aim: 'Fadenkreuz mittig in Fenster-/Holzöffnung platzieren', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Corrode_A-Default_A-Link.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Default', von: 'Mid-Stairs',
+        aim: 'HUD-Molly-Symbol in Mauernische einpassen', hit: 'A-Default Plant'
+      },
+      {
+        filename: 'Brimstone_Attacker_Corrode_A-Default_A-Lobby.png',
+        agent: 'Brimstone', map: 'Corrode', side: 'Attacker', spot: 'A',
+        title: 'Post-Plant A-Default', von: 'A-Lobby',
+        aim: 'HUD-Anzeige an Mauervorsprung anlegen', hit: 'A-Default Plant'
+      }
+    ];
+
+    // Lokale Bilder Speichern
+    const loadedImages = {};
+
+    document.getElementById('fileInput').addEventListener('change', (e) => {
+      for (let file of e.target.files) {
+        loadedImages[file.name] = URL.createObjectURL(file);
+      }
+      render();
+    });
+
+    // Spot-Buttons dynamisch je nach Map rendern (A, B oder A, B, C oder alle)
+    function updateSpotFilter() {
+      const spotContainer = document.getElementById('spotFilter');
+      spotContainer.innerHTML = '';
+
+      if (currentFilters.map === 'ALL MAPS') {
+        const span = document.createElement('div');
+        span.style.cssFont = 'var(--bp-font-mono)';
+        span.style.fontSize = '0.75rem';
+        span.style.color = 'var(--bp-text-dim)';
+        span.style.padding = '0.4rem 0';
+        span.innerText = 'ALLE SPOTS';
+        spotContainer.appendChild(span);
+        return;
+      }
+
+      const hasC = (currentFilters.map === 'Haven' || currentFilters.map === 'Lotus');
+      const spots = hasC ? ['A', 'B', 'C'] : ['A', 'B'];
+
+      if (!spots.includes(currentFilters.spot)) {
+        currentFilters.spot = 'A';
+      }
+
+      spots.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = `bp-btn ${currentFilters.spot === s ? 'active' : ''}`;
+        btn.innerText = s;
+        btn.onclick = () => setFilter('spot', s);
+        spotContainer.appendChild(btn);
+      });
+    }
+
+    // Filter setzen
+    function setFilter(type, val) {
+      currentFilters[type] = val;
+
+      if (type === 'map') {
+        updateSpotFilter();
+      }
+
+      const container = document.getElementById(type + 'Filter');
+      if (container) {
+        const btns = container.querySelectorAll('.bp-btn');
+        btns.forEach(b => {
+          if (b.innerText === val) b.classList.add('active');
+          else b.classList.remove('active');
+        });
+      }
+
+      render();
+    }
+
+    // Rendern
+    function render() {
+      const isAllMaps = (currentFilters.map === 'ALL MAPS');
+
+      document.getElementById('statusBreadcrumb').innerText = isAllMaps 
+        ? `${currentFilters.agent} / ALLE MAPS (Ungefiltert)`
+        : `${currentFilters.agent} / ${currentFilters.map} / ${currentFilters.side} / Spot ${currentFilters.spot}`;
+      
+      document.getElementById('sideBadge').innerText = isAllMaps ? 'ALL' : (currentFilters.side === 'Attacker' ? 'ATK' : 'DEF');
+      document.getElementById('mapNameBadge').innerText = currentFilters.map.toUpperCase();
+
+      const minimapImg = document.getElementById('minimapImg');
+      minimapImg.src = mapMinimaps[currentFilters.map] || 'https://placehold.co/300x300/0d2137/38bdf8?text=' + currentFilters.map;
+
+      if (!isAllMaps && currentFilters.side === 'Defender') {
+        minimapImg.classList.add('rotated');
+      } else {
+        minimapImg.classList.remove('rotated');
+      }
+
+      const filtered = lineups.filter(l => {
+        if (l.agent !== currentFilters.agent) return false;
+        if (isAllMaps) return true; // Bei ALL MAPS alle Lineups des Agents zeigen
+        return l.map === currentFilters.map &&
+               l.side === currentFilters.side &&
+               l.spot === currentFilters.spot;
+      });
+
+      document.getElementById('statusCount').innerText = `${filtered.length} Treffer`;
+
+      const grid = document.getElementById('lineupGrid');
+      grid.innerHTML = '';
+
+      filtered.forEach((l, idx) => {
+        const imgSrc = loadedImages[l.filename] || l.filename;
+
+        const card = document.createElement('div');
+        card.className = 'lu-card';
+        card.innerHTML = `
+          <div class="lu-card-header">
+            <span>${l.map.toUpperCase()} · SPOT ${l.spot}</span>
+            <span>${l.agent.toUpperCase()} · ${l.side.toUpperCase()}</span>
+          </div>
+          <div class="lu-card-title">${l.title}</div>
+          <div class="lu-card-sub">▸ Incendiary (Molly)</div>
+          <div class="lu-card-body">
+            <div class="lu-content">
+              <div class="lu-img-box" onclick="openModal('${imgSrc}')">
+                <img src="${imgSrc}" alt="${l.title}" onerror="this.src='https://placehold.co/600x337/0d2137/38bdf8?text=${encodeURIComponent(l.filename)}'">
+              </div>
+              <div class="lu-details">
+                <div class="lu-box">
+                  <span class="lu-box-num">01</span>
+                  <span class="lu-box-label">VON</span>
+                  <span class="lu-box-val">${l.von}</span>
+                </div>
+                <div class="lu-box">
+                  <span class="lu-box-num">02</span>
+                  <span class="lu-box-label">ZIEL</span>
+                  <span class="lu-box-val">${l.aim}</span>
+                </div>
+                <div class="lu-box">
+                  <span class="lu-box-num">03</span>
+                  <span class="lu-box-label">TREFFER</span>
+                  <span class="lu-box-val" style="color:var(--bp-yellow);">${l.hit}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openModal(src) {
+      document.getElementById('modalImg').src = src;
+      document.getElementById('imageModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('imageModal').classList.remove('active');
+    }
+
+    // Initial Start beim Laden
+    updateSpotFilter();
+    render();
+  </script>
+</body>
+</html>
