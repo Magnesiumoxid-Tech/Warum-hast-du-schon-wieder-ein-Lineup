@@ -1105,7 +1105,7 @@
         degrees += 180;
       }
 	   
-	  minimapImg.style.transform = 'rotate(${degrees}deg)';
+	  minimapImg.style.transform = `rotate(${degrees}deg)`;
 	   
       const filtered = lineups.filter(l => {
         if (l.agent !== currentFilters.agent) return false;
